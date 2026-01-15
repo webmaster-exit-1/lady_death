@@ -3,59 +3,48 @@
 
 ## Description
 
-Lady Death is a 32-bit Assembly program designed to interact directly with the operating system. <br>
+Lady Death (also known as the Stainless Steel Armadillo) is the original source code from the 90's Australian virus development scene. <br>
+Created by Dark Fiber from the NuKE group in 1995, this is authentic MS-DOS assembly code from the underground virus research community. <br>
 Originally discovered in either the depths of VX Underground or the vast Phrack archives, this code is a relic from the past. <br>
 <u>Use at your own risk!</u>
 
 ### Features
 
-* Direct OS interaction through syscalls
-* Low-level programming for maximum control
-* Designed for 32-bit systems (Windows 98 compatible)
+* UMB Resident, Tunneling, Polymorphic, Stealth virus
+* Infects .COM, .EXE, and .XTP files
+* MCB stealth capabilities
+* Direct MS-DOS interaction
+* Designed for MS-DOS v.6.22 (requires 80286+ processor)
 
 ### Requirements
 
-* NASM (Netwide Assembler) for Linux
-* MASM (Microsoft Macro Assembler) for Windows
-* LD (GNU Linker) for Linux
+* A86 assembler v.4.0.2 (Eric Isaacson's A86 compiler)
+* MS-DOS v.6.22 or compatible DOS environment
+* 80286 processor or higher
 
 ### Compilation
 
-#### For Linux
+#### For MS-DOS v.6.22
 
-* Install NASM
+* Obtain A86 assembler v.4.0.2 (Eric Isaacson's A86 compiler)
 
-  ```bash
-  sudo apt-get install nasm
+* Compile with A86
+
+  ```
+  A86 steel_armadillo.asm
   ```
 
-* Compile
+* Run in MS-DOS environment
 
-  ```nasm
-  nasm -f elf32 steel_armadillo.asm
+  ```
+  steel_armadillo.com
   ```
 
-* Link
+#### Alternative: DOSBox or DOS Emulator
 
-  ```c
-  ld -m elf_i386 -s -o lady_death steel_armadillo.o
-  ```
-
-* Run
-
-  ```bash
-  ./lady_death
-  ```
-
-#### For Windows
-
-* Install MASM
-
-* Open the project in an IDE like Visual Studio
-
-* Build the project to compile and link
-
-* Run the executable
+* Install DOSBox or similar DOS emulator
+* Mount the directory containing the assembler and source code
+* Follow the MS-DOS compilation steps above within the emulator
 
 #### Disclaimer
 
